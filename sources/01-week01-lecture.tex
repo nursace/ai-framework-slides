@@ -1,0 +1,449 @@
+%! Author = nursace
+%! Date = 16.09.2026
+
+\documentclass[aspectratio=169,11pt]{beamer}
+\usepackage{color}
+% Week 1 Lecture — What is AI / ML? Course setup
+% Course: AI Frameworks (ages 16--18; intuition over math)
+
+\input{preamble}
+
+\title{Week 1: What is AI / ML?}
+\subtitle{AI Frameworks}
+
+\begin{document}
+
+%----------------------------------------------------------------------
+    \begin{frame}
+        \titlepage
+    \end{frame}
+
+%----------------------------------------------------------------------
+    \begin{frame}{Today's learning goals}
+        By the end of this lecture you should be able to:
+        \begin{enumerate}
+            \item Tell apart \textbf{AI}, \textbf{ML}, and \textbf{data science} in plain words
+            \item Say what this course \emph{will} and \emph{won't} cover
+            \item Explain \textbf{supervised learning} with examples, labels, and predictions
+            \item Name our main tools: Python, Jupyter, and key libraries
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Agenda (80 minutes)}
+        \begin{enumerate}
+            \item Welcome and how the course works
+            \item AI vs ML vs data science
+            \item Scope: what we cover (and what we skip)
+            \item Supervised learning intuition
+            \item Tools overview: Python, Jupyter, libraries
+            \item Looking ahead to practice
+        \end{enumerate}
+        \vspace{0.5em}
+        Short quizzes are pauses to check understanding---not a test grade.
+    \end{frame}
+
+%======================================================================
+    \section{Welcome}
+%======================================================================
+
+    \begin{frame}{Who this course is for}
+        \begin{itemize}
+            \item College students (about 16--18)
+            \item Curious about AI, data, and building simple models
+            \item Comfortable learning by running code and reading charts
+        \end{itemize}
+        \vspace{0.6em}
+        \remember{We favour \textbf{intuition and practice} over heavy mathematics.
+        You will see pictures and examples more often than formulas.}
+    \end{frame}
+
+    \begin{frame}{Weekly rhythm}
+        \begin{columns}[T]
+            \begin{column}{0.48\textwidth}
+                \begin{block}{Lecture --- 80 min}
+                    \begin{itemize}
+                        \item Ideas and demos
+                        \item Short quizzes
+                        \item Questions welcome
+                    \end{itemize}
+                \end{block}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \begin{block}{Practice --- 80 min}
+                    \begin{itemize}
+                        \item Guided notebooks
+                        \item Pair work
+                        \item Done checklist
+                    \end{itemize}
+                \end{block}
+            \end{column}
+        \end{columns}
+        \vspace{0.6em}
+        Today after lecture: set up the environment and make your first predictions \emph{by hand}.
+    \end{frame}
+
+%======================================================================
+    \section{AI vs ML vs data science}
+%======================================================================
+
+    \begin{frame}{Three overlapping ideas}
+        Think of three circles that overlap---not three enemies.
+        \vspace{0.8em}
+        \begin{columns}[T]
+            \begin{column}{0.32\textwidth}
+                \textbf{AI}\\[0.3em]
+                {\small Systems that seem to ``think'' or act intelligently (broad umbrella).}
+            \end{column}
+            \begin{column}{0.32\textwidth}
+                \textbf{Machine learning}\\[0.3em]
+                {\small Programs that \emph{learn patterns from data} instead of only hard-coded rules.}
+            \end{column}
+            \begin{column}{0.32\textwidth}
+                \textbf{Data science}\\[0.3em]
+                {\small Asking questions of data: clean, explore, visualise, sometimes model.}
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{A simple picture}
+        \begin{center}
+            \begin{tikzpicture}[
+                every node/.style={align=center, font=\small},
+                blob/.style={draw=LectureNavy, thick, rounded corners=6pt,
+                minimum width=2.6cm, minimum height=1.5cm, fill=CodeBg}
+            ]
+                \node[blob, minimum width=9.2cm, minimum height=3.6cm, fill=LectureNavy!8]
+                (ai) at (0,0) {};
+                \node[font=\bfseries, LectureNavy] at (0,1.4) {Artificial Intelligence};
+                \node[blob, minimum width=5.8cm, minimum height=2.2cm, fill=LectureAccent!15]
+                (ml) at (0,-0.35) {};
+                \node[font=\bfseries] at (0,0.35) {Machine Learning};
+                \node[blob, fill=white] (ds) at (0,-0.55) {Data work\\\& modelling\\(this course)};
+            \end{tikzpicture}
+        \end{center}
+        \vspace{0.3em}
+        {\small Most of our semester lives inside the ML / data circle---practical modelling with tables.}
+    \end{frame}
+
+    \begin{frame}{Everyday examples (no math)}
+        \begin{itemize}
+            \item \textbf{Recommendations:} ``students who liked X also liked Y''
+            \item \textbf{Spam filters:} learn from past spam vs not-spam emails
+            \item \textbf{Photo tags:} the phone suggests who is in the picture
+            \item \textbf{Weather apps:} models trained on historical measurements
+        \end{itemize}
+        \vspace{0.5em}
+        Common pattern: \textbf{lots of examples} $\rightarrow$ \textbf{a system that generalises} to new cases.
+    \end{frame}
+
+    \begin{frame}{Rules vs learning}
+        \begin{columns}[T]
+            \begin{column}{0.48\textwidth}
+                \begin{block}{Hand-written rules}
+                    \begin{itemize}
+                        \item \texttt{if} score $<$ 50 $\rightarrow$ fail
+                        \item Brittle when life is messy
+                        \item Easy to explain
+                    \end{itemize}
+                \end{block}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \begin{block}{Learning from data}
+                    \begin{itemize}
+                        \item Show many examples
+                        \item Algorithm finds patterns
+                        \item Needs careful checking
+                    \end{itemize}
+                \end{block}
+            \end{column}
+        \end{columns}
+        \vspace{0.5em}
+        This course teaches the second style---with tools that keep the workflow organised.
+    \end{frame}
+
+%--- Quiz 1 ---
+    \begin{frame}{Quiz 1 --- AI / ML / data science}
+        \quizbox{Which statement is the best match for \textbf{machine learning}?}
+        \begin{enumerate}
+            \item Designing web-page layout with HTML and CSS
+            \item Writing only fixed \texttt{if--else} rules with no data
+            \item Learning patterns from examples so we can make predictions on new cases
+            \item Replacing all of mathematics with ChatGPT
+        \end{enumerate}
+        \quizpause
+    \end{frame}
+
+    \begin{frame}{Answer --- Quiz 1}
+        \answerbox{\textbf{3.} Learning patterns from examples to predict on new cases.}
+        \vspace{0.4em}
+        AI is the broad umbrella; data science often includes exploring and communicating with data;
+        ML is specifically about learning from data.
+    \end{frame}
+
+%======================================================================
+    \section{Course scope}
+%======================================================================
+
+    \begin{frame}{What this course \emph{will} cover}
+        \begin{itemize}
+            \item Working with tables in \textbf{pandas}
+            \item Charts with \textbf{matplotlib} (and a little seaborn)
+            \item Feature types: numerical vs categorical
+            \item Train / test thinking; simple metrics
+            \item Models with \textbf{scikit-learn}: k-NN, linear \& logistic regression, trees
+            \item A mini-project and a first look at ethics / limits of AI
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{What we will \emph{not} deep-dive}
+        \begin{itemize}
+            \item Heavy calculus or ``deriving gradients''
+            \item Matrix theory and advanced linear algebra
+            \item Building ChatGPT-scale models from scratch
+            \item Transformer internals and research papers
+        \end{itemize}
+        \vspace{0.5em}
+        \commonmistake{Thinking you must be a maths olympiad winner to start.
+        Curiosity + careful practice is enough for this course.}
+    \end{frame}
+
+    \begin{frame}{How success looks after a few weeks}
+        You will be able to:
+        \begin{enumerate}
+            \item Open a CSV, explore it, and plot something meaningful
+            \item Explain features and a target in a supervised problem
+            \item Train a simple model and talk about whether it seems useful
+        \end{enumerate}
+        \vspace{0.5em}
+        Fancy architectures can wait for a later course.
+    \end{frame}
+
+%--- Quiz 2 ---
+    \begin{frame}{Quiz 2 --- Course scope (true/false)}
+        \quizbox{True or false?\\[0.4em]
+        In this course we will derive neural-network training maths (gradients) from scratch.}
+        \begin{enumerate}
+            \item True
+            \item False
+        \end{enumerate}
+        \quizpause
+    \end{frame}
+
+    \begin{frame}{Answer --- Quiz 2}
+        \answerbox{\textbf{False.} We stay practical: libraries, intuition, and clear experiments---not heavy derivations.}
+    \end{frame}
+
+%======================================================================
+    \section{Supervised learning}
+%======================================================================
+
+    \begin{frame}{The core idea}
+        \begin{block}{Supervised learning}
+            We have \textbf{examples} with known \textbf{answers} (labels).
+            We want a model that predicts the answer for \textbf{new} examples.
+        \end{block}
+        \vspace{0.6em}
+        \begin{itemize}
+            \item \textbf{Features / inputs:} what we know about each example
+            \item \textbf{Label / target:} the answer we want to predict
+            \item \textbf{Model:} the learned rule (often a function from features $\rightarrow$ prediction)
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Two common flavours}
+        \begin{columns}[T]
+            \begin{column}{0.48\textwidth}
+                \begin{block}{Classification}
+                    Predict a \textbf{category}\\[0.4em]
+                    {\small spam / not spam\\
+                    pass / fail\\
+                    cat / dog / bird}
+                \end{block}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \begin{block}{Regression}
+                    Predict a \textbf{number}\\[0.4em]
+                    {\small house price\\
+                    temperature\\
+                    exam score}
+                \end{block}
+            \end{column}
+        \end{columns}
+        \vspace{0.6em}
+        Same big idea; different kind of answer.
+    \end{frame}
+
+    \begin{frame}{A tiny table (imagine a spreadsheet)}
+        \begin{center}
+            \begin{tabular}{@{}cccc@{}}
+                \toprule
+                \textbf{Size (m$^2$)} & \textbf{Rooms} & \textbf{City centre?} & \textbf{Price (k)} \\
+                \midrule
+                50 & 2 & yes & 180 \\
+                80 & 3 & no  & 210 \\
+                65 & 2 & yes & 200 \\
+                \ldots & \ldots & \ldots & \ldots \\
+                \bottomrule
+            \end{tabular}
+        \end{center}
+        \vspace{0.6em}
+        \begin{itemize}
+            \item Features: size, rooms, city centre
+            \item Label: price
+            \item Task type: \textbf{regression} (a number)
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Training vs using the model}
+        \begin{enumerate}
+            \item \textbf{Train:} show the model many examples with correct labels
+            \item \textbf{Predict:} give new features; get a predicted label
+            \item \textbf{Check:} compare predictions to reality on data the model did \emph{not} train on
+        \end{enumerate}
+        \vspace{0.6em}
+        We will practise the ``don't cheat with the test data'' idea in a later week.
+    \end{frame}
+
+    \begin{frame}{Not everything is supervised}
+        Quick awareness (details later if at all):
+        \begin{itemize}
+            \item \textbf{Unsupervised:} find structure without labels (e.g.\ group similar customers)
+            \item \textbf{Generative AI:} create text or images (powerful tools; different workflow)
+        \end{itemize}
+        \vspace{0.5em}
+        This semester's backbone is \textbf{supervised learning on tables}.
+    \end{frame}
+
+%--- Quiz 3 ---
+    \begin{frame}{Quiz 3 --- Supervised learning}
+        \quizbox{You predict whether an email is spam or not spam from its words.
+        What kind of supervised task is this?}
+        \begin{enumerate}
+            \item Regression
+            \item Classification
+            \item Neither---there are no features
+            \item Unsupervised clustering only
+        \end{enumerate}
+        \quizpause
+    \end{frame}
+
+    \begin{frame}{Answer --- Quiz 3}
+        \answerbox{\textbf{2.} Classification --- the label is a category (spam / not spam).}
+        \vspace{0.4em}
+        If we predicted ``how many spam emails arrive tomorrow'' (a count), that would lean toward regression.
+    \end{frame}
+
+    \begin{frame}{Quiz 3b --- Features and labels}
+        \quizbox{In the housing table, \textbf{price} is best described as:}
+        \begin{enumerate}
+            \item A feature used as input
+            \item The label / target we want to predict
+            \item The programming language
+            \item A type of chart
+        \end{enumerate}
+        \quizpause
+    \end{frame}
+
+    \begin{frame}{Answer --- Quiz 3b}
+        \answerbox{\textbf{2.} The label / target --- what we try to predict from the other columns.}
+    \end{frame}
+
+%======================================================================
+    \section{Tools}
+%======================================================================
+
+    \begin{frame}{Our toolkit this semester}
+        \begin{itemize}
+            \item \textbf{Python} --- the language
+            \item \textbf{Jupyter} (or Google Colab) --- notebooks: text + code + results together
+            \item \textbf{pandas} --- tables (DataFrames)
+            \item \textbf{matplotlib} --- plots
+            \item \textbf{scikit-learn} --- classical ML models with a consistent API
+        \end{itemize}
+        \vspace{0.5em}
+        Together, these are the ``framework'' feeling: shared patterns like \pycode{fit} / \pycode{predict}.
+    \end{frame}
+
+    \begin{frame}{Why Jupyter?}
+        \begin{itemize}
+            \item Run a small piece of code; see output immediately
+            \item Mix explanations and results (great for learning and projects)
+            \item Easy to share a \pycode{.ipynb} file or use Colab in the browser
+        \end{itemize}
+        \vspace{0.5em}
+        \trythis{In practice today: create a notebook, run a cell with
+        \pycode{print("Hello, AI Frameworks!")}.}
+    \end{frame}
+
+    \begin{frame}[fragile]{A first taste of Python in a notebook}
+        \begin{lstlisting}
+print("Hello, AI Frameworks!")
+
+# A tiny prediction "by hand" (no ML library yet)
+size = 70          # m^2
+guess_price = 2.5 * size + 40   # made-up rule
+print("Guessed price (k):", guess_price)
+        \end{lstlisting}
+        \vspace{0.3em}
+        Later, libraries will learn better rules from real data---same idea, less guesswork.
+    \end{frame}
+
+    \begin{frame}{Libraries = don't reinvent everything}
+        \begin{itemize}
+            \item Professionals rarely write sorting, plotting, or k-NN from scratch in coursework
+            \item Libraries give tested tools and a common language with teammates
+            \item Your job: ask good questions, prepare data, interpret results
+        \end{itemize}
+        \vspace{0.4em}
+        \commonmistake{Thinking ``using a library means I'm not really learning.''
+        Using tools well \emph{is} the skill---plus understanding what they do.}
+    \end{frame}
+
+%--- Quiz 4 ---
+    \begin{frame}{Quiz 4 --- Tools}
+        \quizbox{Which tool is mainly for working with \textbf{tables} of data in Python?}
+        \begin{enumerate}
+            \item matplotlib
+            \item pandas
+            \item HTML
+            \item Photoshop
+        \end{enumerate}
+        \quizpause
+    \end{frame}
+
+    \begin{frame}{Answer --- Quiz 4}
+        \answerbox{\textbf{2.} pandas --- DataFrames for tabular data.\\[0.3em]
+        matplotlib is for plots; we will use both often.}
+    \end{frame}
+
+%======================================================================
+    \section{Wrap-up}
+%======================================================================
+
+    \begin{frame}{Key takeaways}
+        \begin{enumerate}
+            \item AI is broad; ML learns from data; data science includes exploring data
+            \item This course is practical and light on formal maths
+            \item Supervised learning: features + labels $\rightarrow$ predictions on new cases
+            \item Classification predicts categories; regression predicts numbers
+            \item Python + Jupyter + pandas / matplotlib / scikit-learn are our tools
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Next up}
+        \begin{block}{Practice (today)}
+            Environment check · first notebook · predict house price by hand
+        \end{block}
+        \vspace{0.5em}
+        \begin{block}{Next lecture (Week 2)}
+            Python enough for data work: lists, dicts, loops, functions
+        \end{block}
+    \end{frame}
+
+    \begin{frame}{Questions?}
+        \begin{center}
+            {\Large What is still fuzzy: AI vs ML, labels, or the tools?}
+        \end{center}
+    \end{frame}
+
+\end{document}

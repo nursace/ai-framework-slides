@@ -1,0 +1,213 @@
+%! Author = nursace
+%! Date = 16.09.2026
+\documentclass[aspectratio=169,11pt]{beamer}
+% Week 1 Practice — Setup, first notebook, predict-by-hand
+% Course: AI Frameworks (ages 16--18)
+
+\input{preamble}
+
+\title{Week 1 Practice: Setup \& First Predictions}
+\subtitle{AI Frameworks}
+
+\begin{document}
+
+    \begin{frame}
+        \titlepage
+    \end{frame}
+
+    \begin{frame}{Practice goals (80 minutes)}
+        By the end of this session you should have:
+        \begin{enumerate}
+            \item A working environment (Colab \emph{or} local Jupyter)
+            \item A notebook where you can run cells and see output
+            \item A simple plot from a tiny list of numbers
+            \item A hand-made rule that ``predicts'' a house price from size
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Agenda}
+        \begin{enumerate}
+            \item Environment check (15--20 min)
+            \item Notebook warm-up (15 min)
+            \item First tiny plot (15 min)
+            \item Predict-by-hand activity (20--25 min)
+            \item Done checklist \& share-out (10 min)
+        \end{enumerate}
+    \end{frame}
+
+%======================================================================
+    \section{Environment}
+%======================================================================
+
+    \begin{frame}{Option A --- Google Colab (recommended if unsure)}
+        \begin{enumerate}
+            \item Open \url{https://colab.research.google.com}
+            \item Sign in with a school or personal Google account
+            \item File $\rightarrow$ New notebook
+            \item Run a cell: \pycode{print(1+1)} --- you should see \pycode{2}
+        \end{enumerate}
+        \vspace{0.5em}
+        No local install needed; runs in the browser.
+    \end{frame}
+
+    \begin{frame}{Option B --- Local Jupyter}
+        \begin{itemize}
+            \item If the instructor prepared Anaconda / VS~Code: follow the handout
+            \item Create a folder for this course
+            \item Launch Jupyter Lab or Notebook; create \pycode{week01.ipynb}
+        \end{itemize}
+        \vspace{0.5em}
+        \commonmistake{Spending the whole session only on installers.
+        If stuck after 15 minutes, switch to Colab and continue learning.}
+    \end{frame}
+
+    \begin{frame}[fragile]{Checkpoint A --- verify Python}
+        \begin{lstlisting}
+import sys
+print(sys.version)
+
+import matplotlib
+print("matplotlib OK")
+        \end{lstlisting}
+        \vspace{0.3em}
+        If both print without errors, you are ready.
+    \end{frame}
+
+%======================================================================
+    \section{Notebook warm-up}
+%======================================================================
+
+    \begin{frame}{How a notebook works}
+        \begin{itemize}
+            \item \textbf{Code cells:} run Python
+            \item \textbf{Markdown cells:} notes and headings (optional today)
+            \item Run order matters: if a cell uses a variable, define it first
+        \end{itemize}
+        \vspace{0.5em}
+        \trythis{Restart the kernel once today on purpose, then re-run cells from the top.}
+    \end{frame}
+
+    \begin{frame}[fragile]{Warm-up cells}
+        \begin{lstlisting}
+print("Hello, AI Frameworks!")
+
+name = "Alex"   # change me
+print("Student:", name)
+
+sizes = [50, 65, 80, 95]
+print("Number of houses:", len(sizes))
+print("First size:", sizes[0])
+        \end{lstlisting}
+    \end{frame}
+
+%======================================================================
+    \section{First plot}
+%======================================================================
+
+    \begin{frame}[fragile]{A minimal plot}
+        \begin{lstlisting}
+import matplotlib.pyplot as plt
+
+sizes = [50, 65, 80, 95]
+prices = [180, 200, 210, 250]  # made-up
+
+plt.scatter(sizes, prices)
+plt.xlabel("Size (m^2)")
+plt.ylabel("Price (k)")
+plt.title("Tiny housing example")
+plt.show()
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{What to notice}
+        \begin{itemize}
+            \item Larger size tends to go with higher price \emph{in this toy data}
+            \item Real data will be messier---that is normal
+            \item Plots help you think before you model
+        \end{itemize}
+    \end{frame}
+
+%======================================================================
+    \section{Predict by hand}
+%======================================================================
+
+    \begin{frame}{Activity: invent a rule}
+        Goal: predict \textbf{price} from \textbf{size} only---no ML library.
+        \vspace{0.5em}
+        \begin{enumerate}
+            \item Look at the scatter plot (or the table of pairs)
+            \item Invent a simple rule, e.g.\ \pycode{price = a * size + b}
+            \item Pick numbers for \pycode{a} and \pycode{b} that feel reasonable
+            \item Predict for a \emph{new} size (e.g.\ 70~m$^2$) not in the list
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}[fragile]{Template}
+        \begin{lstlisting}
+def predict_price(size):
+    a = 2.0    # tweak these
+    b = 50
+    return a * size + b
+
+print(predict_price(70))
+
+# Optional: compare your rule to the toy points
+for s, p in zip(sizes, prices):
+    print(s, "real:", p, "my guess:", predict_price(s))
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Discuss with a neighbour (3 minutes)}
+        \begin{itemize}
+            \item Whose rule fits the points better ``by eye''?
+            \item What happens if you change \pycode{a} a lot?
+            \item Why might two people choose different rules?
+        \end{itemize}
+        \vspace{0.5em}
+        Next weeks: algorithms will search for good rules using data---same idea, more systematic.
+    \end{frame}
+
+%--- Short formative check (optional projectable quiz) ---
+    \begin{frame}{Quiz --- Practice check}
+        \quizbox{In supervised learning terms, house \textbf{size} is a \ldots{} and \textbf{price} is a \ldots}
+        \begin{enumerate}
+            \item label ; feature
+            \item feature ; label
+            \item library ; notebook
+            \item plot ; colour
+        \end{enumerate}
+        \quizpause
+    \end{frame}
+
+    \begin{frame}{Answer --- Practice check}
+        \answerbox{\textbf{2.} Size is a \textbf{feature} (input); price is the \textbf{label} / target.}
+    \end{frame}
+
+%======================================================================
+    \section{Done checklist}
+%======================================================================
+
+    \begin{frame}{Done checklist}
+        Tick when finished:
+        \begin{enumerate}
+            \item Environment works (Colab or local)
+            \item Notebook runs \pycode{print} and imports \pycode{matplotlib}
+            \item Scatter plot of size vs price appears
+            \item \pycode{predict\_price} function returns a number for size 70
+            \item You can say in one sentence what a feature and a label are
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Before you leave}
+        \begin{itemize}
+            \item Save / download your notebook (\pycode{week01.ipynb})
+            \item Note one thing that was confusing---bring it to Week 2
+        \end{itemize}
+        \vspace{0.6em}
+        \begin{block}{Next week}
+            Lecture: Python enough for data (lists, dicts, loops, functions)\\
+            Practice: small coding warm-ups without pandas (yet)
+        \end{block}
+    \end{frame}
+
+\end{document}
