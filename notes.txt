@@ -1,6 +1,0 @@
-today:
-05 - week-05
-
-next:
-add new slides about knn, lr and other methods
-knn - lecture + followalong
